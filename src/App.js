@@ -1,50 +1,148 @@
-import React, { Component } from "react"
-import logo from "./logo.svg"
-import "./App.css"
+import React, {useState} from "react";
+import "./styles.css";
+import Modal from "./components/Modal";
 
-class LambdaDemo extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { loading: false, msg: null }
-  }
 
-  handleClick = api => e => {
-    e.preventDefault()
+export default function App() {
+    
+  return(
+        <div id='body'>
+            <Header/>
+            <Card 
+                className='section'
+                img='./Capture1.PNG'
+                title='Iphone 12 Pro' 
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                        eiusmod."
+                        fullDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                        aliquip ex ea commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                        pariatur."
+                        
+            />
+       
 
-    this.setState({ loading: true })
-    fetch("/.netlify/functions/" + api)
-      .then(response => response.json())
-      .then(json => this.setState({ loading: false, msg: json.msg }))
-  }
+            <Card 
+                className='section bg-grey'
+                img='./Capture3.PNG' 
+                title='Samsung S20 Ultra'
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                        eiusmod."
+                        fullDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                        aliquip ex ea commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                        pariatur."
+            />
 
-  render() {
-    const { loading, msg } = this.state
-
-    return (
-      <p>
-        <button onClick={this.handleClick("hello")}>{loading ? "Loading..." : "Call Lambda"}</button>
-        <button onClick={this.handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button>
-        <br />
-        <span>{msg}</span>
-      </p>
-    )
-  }
+            <Card 
+                className='section'
+                img='./Capture1.PNG' 
+                title='Cual es mejor?' 
+                description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                        eiusmod.'
+                fullDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                        aliquip ex ea commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                        pariatur."
+            />
+            <ContactContainer/>
+        </div>
+    );
 }
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <LambdaDemo />
-        </header>
-      </div>
-    )
-  }
+const Header = () =>{
+    return(
+        <div className='header'>
+            <span className='header-title'>
+                Joaquín Vallejos
+            </span>
+            <br/>
+            <span className="header-text">
+                El blog de Tecnologia.
+            </span>
+        </div>
+    );
+   
+    
 }
 
-export default App
+
+
+
+
+
+const Card = (props) =>{
+
+    const [show, setShow] = useState(false)
+
+    return(
+        <>
+        <Modal fullDescription={props.fullDescription} show={show} close={() =>setShow(false)} ></Modal>
+        <div className={props.className} >
+            <div className="small-div">
+                <i className={props.className}></i>
+                <img src={props.img} alt=''/>
+            </div>
+
+            <div className="big-div">
+                <span className='div-title'>
+                    {props.title}
+                </span>
+                <br/>
+                <span>
+                    {props.description}
+                </span>
+            </div>
+            <button onClick={() =>setShow(true)}>Ver mas</button>
+        </div>
+        </>
+    )
+}
+ 
+
+
+
+const ContactContainer = () => {
+    return(
+        <div className='contact-container bg-grey'>
+            <span className="div-title">Contacto</span>
+            <div className='contact-form'>
+                <div id='sect1'>
+                    <span>Contactanos</span>
+                    <span>
+                        <i className="fas fa-map-marker-alt"></i>
+                        Joaquin Vallejos
+                    </span>
+                    <span>
+                        <i className="fas fa-mobile-alt"></i>
+                        +569 6776 8058
+                    </span>
+                    <span>
+                        <i className="far fa-envelope"></i>
+                        joaquin.vallejos04@inacapmail.cl
+                    </span>
+                </div>
+                    
+                <div id='sect2'>
+                    <span>
+                        Contacto
+                    </span>
+
+                    <input type="text" placeholder="Email" className="input-field"/>
+                    <textarea name="" id="" cols="30" rows="10" placeholder="Mensaje"></textarea>
+                    <button className="contact-btn">Enviar</button>
+                </div>
+            </div>
+        </div>
+    );
+   
+     
+     
+}
+
